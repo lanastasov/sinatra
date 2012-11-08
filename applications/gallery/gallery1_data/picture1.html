@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>Gallery 1 - Picture 1</title>
+	<link rel="stylesheet" 
+			href="../gallery.css" 
+			type="text/css" 
+			media="screen"  
+			charset="utf-8" 
+	/>
+	
+</head>
+
+<body>
+<h1>Gallery 1</h1>
+<div id="container">
+	<p>
+		<img src="../images/flower1-300.jpg" alt="Picture 1" />
+	</p>
+	<p class="caption">
+		Picture 1
+	</p>
+</div>
+
+<p id="menu">
+	<a href="gallery1/picture1.html">Picture 1</a> | 
+	<a href="gallery1/picture2.html">Picture 2</a> | 
+	<a href="gallery1/picture3.html">Picture 3</a> |
+	<a href="gallery1/picture4.html">Picture 4</a> | 
+	<a href="gallery1/picture5.html">Picture 5</a> 
+</p>
+<script type="text/javascript" 
+		charset="utf-8" 
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"> 
+</script>
+
+<script>
+/*
+$("#menu a").click(function() {
+	console.log(this);
+	console.log(this.href);
+	$("#montainer").load("/");
+	return false;
+});
+*/
+
+/*
+$("#menu a").click(function() {
+		console.log(this.href);
+		console.log(this);
+	$("#container").load(this.href + " #container p");// + " #container p");
+	return false;
+});
+*/
+/*
+	var $pictures, 
+		$menu_links = $("#memu a"), 
+		$title = $("title"), 
+		$image = $("#container img"),
+		$caption = $(".caption");
+
+	$.ajax({
+		url: "pictures.xml",
+		success: function(data) {
+			$pictures = $("picture", data);
+		}
+	});
+*/
+</script>
+</body>
+</html>

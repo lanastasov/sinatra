@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+</head>
+<body>
+	The date is: <%= @time.strftime("%d-%m-%Y %H:%M:%S")%>
+	<ul>
+		<% @arr.each do |page| %>
+			<li><a href="/view/<%=page%>"><%=formatter(page) %></a></li>
+		<% end %>
+	</ul>
+</body>
+</html>

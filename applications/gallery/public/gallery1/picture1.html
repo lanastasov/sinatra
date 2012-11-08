@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>Gallery 1 - Picture 1</title>
+	<link rel="stylesheet" 
+			href="../gallery.css" 
+			type="text/css" 
+			media="screen"  
+			charset="utf-8" 
+	/>
+	
+</head>
+
+<body>
+<h1>Gallery 1</h1>
+<div id="container">
+	<p>
+		<img src="../images/flower1-300.jpg" alt="Picture 1" />
+	</p>
+	<p class="caption">
+		Picture 1
+	</p>
+</div>
+<div id="montainer">
+
+</div>
+
+<p id="menu">
+	<a href="../gallery1/picture1.html">Picture 1</a> | 
+	<a href="../gallery1/picture2.html">Picture 2</a> | 
+	<a href="../gallery1/picture3.html">Picture 3</a> |
+	<a href="../gallery1/picture4.html">Picture 4</a> | 
+	<a href="../gallery1/picture5.html">Picture 5</a> 
+</p>
+
+<script type="text/javascript" 
+		charset="utf-8" 
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"> 
+</script>
+
+<script>
+/*
+$("#menu a").click(function() {
+	console.log(this);
+	console.log(this.href);
+	$("#montainer").load("/");
+	return false;
+});
+*/
+
+/*
+$("#menu a").click(function() {
+		console.log(this.href);
+		console.log(this);
+	$("#container").load(this.href + " #container p");
+	return false;
+});
+*/
+
+	var $pictures, 
+		pictures,
+		$menu_links = $("#menu a"), 
+		$title = $("title"), 
+		$image = $("#container img"),
+		$caption = $(".caption");
+
+	$.ajax({
+			url: "gallery1/pictures.json",
+		//url: "gallery1/pictures.xml",
+		//	url: "../gallery1/pictures.xml",
+		//url: "http://localhost:4567/gallery1/pictures.xml",
+		success: function(data) {
+		//	$pictures = $("picture", data);
+			pictures = data;	
+		}
+	});
+
+	$menu_links.click(function() {
+	/* xml
+		var index = $menu_links.index(this);
+		var $picture = $pictures.filter(":eq(" + index + ")");
+		$caption.text($picture.attr("caption"));
+		$image.attr("src", $picture.attr("source"));
+		$title.text("Gallery 1 - " + $picture.attr("caption"));
+		return false;
+	*/
+		var index = $menu_links.index(this);
+		var picture = pictures[index].picture;
+		$caption.text(picture.caption);
+		$image.attr("src", picture.source);
+		$title.text("Gallery 1 - " + picture.caption);
+		return false;
+	});
+</script>
+</body>
+</html>

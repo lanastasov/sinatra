@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>Gallery 1 - Picture 1</title>
+	<link rel="stylesheet" href="../gallery.css" type="text/css" media="screen"  charset="utf-8" />
+	
+</head>
+
+<body>
+<h1>Gallery 2</h1>
+<div id="container">
+	<p>
+		<img src="../images/flower1-300.jpg" alt="Picture 1" />
+	</p>
+	<p class="caption">
+		Picture 1
+	</p>
+</div>
+
+<p id="menu">
+	<a href="picture1.html">Picture 1</a> | 
+	<a href="picture2.html">Picture 2</a> | 
+	<a href="picture3.html">Picture 3</a> |
+	<a href="picture4.html">Picture 4</a> | 
+	<a href="picture5.html">Picture 5</a> 
+</p>
+
+<p id="error">
+	An error has occurred Please try again later!
+</p>
+
+<div id="comments">
+	<form method="POST" action="/">
+		<h2>New Comment</h2>
+		<p>
+			<label for="username">Username</label><br />
+			<input type="text" name="username" id="username" />
+		</p>
+		<p>
+			<label for="text">Comment</label><br />
+			<textarea id="text" name="text"></textarea>
+		</p>
+		<p>
+			<input type="submit" value="Submit" />
+		</p>
+	</form>
+	<div class="comment">
+		<p class="comment_title">Comment 1 - By John Doe</p>
+		<p>Great image!</p>
+	</div>
+	<div class="comment">
+		<p class="comment_title">Comment 2 - By Jane Doe</p>
+		<p>I agree.</p>
+	</div>
+</div>
+
+<p id="loading">
+	Processing Comment...<br />
+	<img src="../images/loading.gif">
+</p>
+
+<script type="text/javascript"
+		charset="utf-8"
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"> 
+</script>
+
+<script type="text/javascript" charset="utf-8">
+	var pictures,
+   	$menu_links = $("#menu a"), 
+		$title = $("title"),
+	  $image = $("#container img"),
+	  $caption = $(".caption"),
+	  $error = $("#error"),
+		$form = $("form"),
+		$loading = $("#loading"),
+		$comments = $("#comments");
+
+	$.get("gallery1/pictures.json", function(data){
+			pictures = data;
+	})
+	
+/*
+	$.ajaxSetup({ 
+		error: function() {
+			alert("request failed");
+			$error.show();
+		}
+	});
+*/
+
+	$error.ajaxError( function() {
+		//this.show();
+		console.log(this);
+		$(this).show();
+	});
+
+/*
+	$.ajax({
+		type: 'GET',
+		dataType: 'json',
+		url: "gallery1/pictures.json1",
+		timeout: 5000,
+		success: function(data) {
+			alert("request successful");
+		},
+		error: function(xhr, textStatus, errorThrown) {
+			alert("request failed");
+		}
+	});
+*/
+	
+	$menu_links.click(function(){
+		var index = $menu_links.index(this);
+		var picture = pictures[index].picture;
+		$caption.text(picture.caption);
+		$image.attr("src", picture.source);
+		$title.text("Gallery 1 - " + picture.caption);
+		return false;
+	})
+
+	$form.submit(function() {
+		//$form.hide();
+		//setTimeout(10000);
+	
+		$.ajax({
+			type: "POST",
+			url: $form.attr("action"),
+			data: $form.serialize(),
+			beforeSend: function() {
+				$loading.show();
+			},
+			complete: function() {
+				$loading.hide();
+			},
+			success: function(data) {
+				console.log(data);
+				$comments.append(data);	
+			}
+		});
+		return false;
+	});
+
+</script>
+</body>
+</html>

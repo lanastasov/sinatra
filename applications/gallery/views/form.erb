@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+
+<div id="comments">
+		<form action="/" method="post">
+				<input type="text" name="user">
+				<input type="text" name="message">
+				<input type="submit">
+		</form>
+		<div id="commetsWrapper">
+		</div>
+</div>
+
+<p><%= @time%></p>
+<p><%= params[:message]%></p>
+<p><%= params[:user]%></p>
+<%= 
+	File.open("public/file_#{params[:user]}","w") do |file|
+		file.puts "<div class=\"comment\">"
+		file.puts "<p class=\"comment_title\">Comment #{@comment_count} - #{params[:user]} </p>"	
+		file.puts "<p>#{params[:message]}</p>"
+		file.puts "</div>"
+	end
+%>
+<div class="comment">
+	<p class="comment_title">Comment 3 - By Screencasts.org</p>
+	<p>AJAX Comment!</p>
+</div>
+
+<script>
+		$("form").submit(function() {
+		//$form.hide();
+		//setTimeout(10000);
+				alert("<%=params[:user]%>")	
+				$.ajax({
+					type: "POST",
+					//url: $form.attr("views/posts/file_<%=params[:user]%>"),
+					url: "views/posts/file_u3",//<%=params[:user]%>",
+					data: $form.serialize(),
+					beforeSend: function() {
+						$loading.show();
+					},
+					complete: function() {
+						$loading.hide();
+					},
+					success: function(data) {
+						console.log(data);
+						$comments.append(data);	
+					}
+				});
+		return false;
+		});
+/*
+	$.load( "views/posts/file_u3", function() {
+				alert("file loaded");
+			});
+*/
+
+		$('#commentsWrapper').load("views/posts/file_u3");
+</script>
+
+</body>
+</html>
+
+
+
+
